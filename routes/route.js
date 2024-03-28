@@ -7,18 +7,20 @@ const path = require("path");
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const destinationPath = path.join(__dirname, "../files");
-        cb(null, destinationPath);
-    },
-    filename: function (req, file, cb) {
-        const date = Date.now();
-        cb(null, date+file.originalname);
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         const __dirname1 = path.resolve();
+//         const destinationPath = path.join(__dirname1, "../files");
+//         cb(null, destinationPath);
+//     },
+//     filename: function (req, file, cb) {
+//         const date = Date.now();
+//         cb(null, date+file.originalname);
+//     }
+// });
+const __dirname1 = path.resolve();
 
-const upload = multer({ storage: storage });
+const upload = multer({ dest: path.join(__dirname1, "../files") });
 
 router.get("/", (req, res) => {
   res.send("PDF GENERATOR");
