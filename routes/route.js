@@ -3,6 +3,7 @@ const multer = require("multer");
 const Pdf = require("../models/pdfSchema");
 const { PDFDocument, PDFName, PDFPage } = require('pdf-lib');
 const fs = require("fs").promises;
+const path = require("path");
 
 const router = express.Router();
 
