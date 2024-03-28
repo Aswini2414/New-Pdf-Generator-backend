@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
 router.post("/upload-files", upload.single("file"), async (req, res) => {
     console.log(req.file);
     
-    const fileName = req.file.filename;
+    const fileName = req.file.name;
     try {
         const newPdf = await Pdf.create({ pdf: fileName });
         await newPdf.save();
@@ -46,8 +46,7 @@ router.post("/generate-pdf", async (req, res) => {
     try {
         const { filePath, selectedPages, pdfFile } = req.body;
         const ExistingPdfBytes = await fs.readFile(
-          path.join(__dirname1,filePath)
-        );
+          path.join(__dirname1,filePath));
         const ExistingPdfDoc = await PDFDocument.load(ExistingPdfBytes);
         const newPdfDoc = await PDFDocument.create();
         for (const i of selectedPages) {
