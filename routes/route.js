@@ -18,6 +18,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+app.get("/", (req, res) => {
+  res.send("PDF GENERATOR");
+});
+
 router.post("/upload-files", upload.single("file"), async (req, res) => {
     
     const fileName = req.file.filename;

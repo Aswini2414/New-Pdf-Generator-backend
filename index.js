@@ -15,9 +15,6 @@ const port = 5000;
 
 connection();
 
-app.get("/", (req, res) => {
-    res.send("PDF GENERATOR")
-})
 app.listen(port, () => {
     console.log(`Server is running on the port ${port}`);
 })
