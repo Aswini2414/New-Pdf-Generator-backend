@@ -7,20 +7,20 @@ const path = require("path");
 
 const router = express.Router();
 
-// const storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         const __dirname1 = path.resolve();
-//         const destinationPath = path.join(__dirname1, "../files");
-//         cb(null, destinationPath);
-//     },
-//     filename: function (req, file, cb) {
-//         const date = Date.now();
-//         cb(null, date+file.originalname);
-//     }
-// });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const __dirname1 = path.resolve();
+        const destinationPath = path.join(__dirname1, "files");
+        cb(null, destinationPath);
+    },
+    filename: function (req, file, cb) {
+        const date = Date.now();
+        cb(null, date+file.originalname);
+    }
+});
 const __dirname1 = path.resolve();
 
-const upload = multer({ dest: path.join(__dirname1, "../files") });
+const upload = multer({storage:storage});
 
 router.get("/", (req, res) => {
   res.send("PDF GENERATOR");
@@ -29,9 +29,9 @@ router.get("/", (req, res) => {
 router.post("/upload-files", upload.single("file"), async (req, res) => {
     console.log(req.file);
     
-    const fileName = req.file.name;
+    const fileName = req.file.filename;
     try {
-        const newPdf = await Pdf.create({ pdf: `${fileName}.pdf` });
+        const newPdf = await Pdf.create({ pdf: `${fileName}` });
         await newPdf.save();
         console.log(newPdf);
         res.status(201).json(newPdf);
@@ -54,7 +54,7 @@ router.post("/generate-pdf", async (req, res) => {
             newPdfDoc.addPage(copiedPage);
         }
         const newPdfBytes = await newPdfDoc.save();
-        await fs.writeFile(path.join(__dirname1, `../Generated_pdf/generated${pdfFile}`),newPdfBytes);
+        await fs.writeFile(path.join(__dirname1, `Generated_pdf/generated${pdfFile}`),newPdfBytes);
         const newPdf = await Pdf.create({ pdf: `generated${pdfFile}` });
         await newPdf.save();
         res.status(201).json(newPdf);

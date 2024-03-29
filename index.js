@@ -11,8 +11,8 @@ const __dirname1 = path.resolve();
 app.use(cors());
 app.use(express.json());
 app.use(routes);
-app.use("/files", express.static(path.join(__dirname1,"../files")));
-app.use("/generated", express.static(path.join(__dirname1,"../Generated_pdf")));
+app.use("/files", express.static(path.join(__dirname1,"./files")));
+app.use("/generated", express.static(path.join(__dirname1,"./Generated_pdf")));
 
 const port = 5000;
 
