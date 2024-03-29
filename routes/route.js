@@ -31,10 +31,10 @@ router.post("/upload-files", upload.single("file"), async (req, res) => {
     
     const fileName = req.file.name;
     try {
-        const newPdf = await Pdf.create({ pdf: fileName });
+        const newPdf = await Pdf.create({ pdf: `${fileName}.pdf` });
         await newPdf.save();
         console.log(newPdf);
-        res.status(201).json({ newPdf });
+        res.status(201).json(newPdf);
         
     } catch (error) {
         res.status(400).json(error);
