@@ -2,7 +2,7 @@
 
 ## Run Locally
 
-###Setup .env file
+### Setup .env file
 
 ```
 DATABASE_URL = .....
